@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace GenericTypeT
 {
+    enum Genre { Horror, Scify }
     [Serializable]
+
+
     internal class Movie : Base
     {
-        public int MovieGenre { get; set; }
+        public Genre MovieGenre { get; set; }
+        public DateTime Release { get; set; }
     }
 }

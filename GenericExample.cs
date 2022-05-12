@@ -20,7 +20,7 @@ namespace GenericTypeT
         public GenericExample()
         {
             d.musicList.Add(new Music { Name = "Fields of Gold", Artist = "Sting", Id = 1 });
-            d.movieList.Add(new Movie { Id = 13, Name = "Moon", MovieGenre = 1 });
+            d.movieList.Add(new Movie { Id = 13, Name = "Moon", MovieGenre = Genre.Scify, Release = new DateTime(2010, 10, 10) });
 
             #region
             //baseList.AddRange(d.musicList);
@@ -46,7 +46,21 @@ namespace GenericTypeT
 
             // Load the data depending on type
             d = Load<Data>(path + @"/Media.json");
+            while (true)
+            {
+                Search();
+
+            }
         }
+
+
+        void Search() 
+        {
+            Console.Write("Search: ");
+            string? input = Console.ReadLine();
+            ShowSearchResults(input);
+        }
+
 
         /// <summary>
         /// Converts an Object to JSON and writes to file
@@ -65,6 +79,27 @@ namespace GenericTypeT
             string json = File.ReadAllText(path);
             T? obj = JsonSerializer.Deserialize<T>(json);
             return obj;
+        }
+
+        void ShowSearchResults(string? query)
+        {
+            Console.WriteLine("---Results in music---");
+            foreach (var music in d.musicList)
+            {
+                bool containsSearchResult = music.Name.Contains(query, StringComparison.CurrentCultureIgnoreCase);
+                bool artist = music.Artist.Contains(query, StringComparison.CurrentCultureIgnoreCase);
+                if (containsSearchResult || artist) Console.WriteLine(music.Name + " " + music.Artist);
+            }
+
+            Console.WriteLine("---Results in moveis---");
+            foreach (var movie in d.movieList)
+            {
+                bool containsSearchResult = movie.Name.Contains(query, StringComparison.CurrentCultureIgnoreCase);
+                bool isGenre = movie.MovieGenre.ToString().Contains(query, StringComparison.CurrentCultureIgnoreCase);
+                int year = 0;
+                bool canParseYear = int.TryParse(query, out year);
+                if (containsSearchResult || isGenre || (canParseYear && movie.Release.Year == year)) Console.WriteLine(movie.Name);
+            }
         }
     }
 
