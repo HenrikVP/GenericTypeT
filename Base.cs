@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace GenericTypeT
 {
-    internal class Class2
+    internal class Base
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        public int Class2int { get; set; }
     }
 }

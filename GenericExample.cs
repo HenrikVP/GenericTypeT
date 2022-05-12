@@ -9,21 +9,49 @@ namespace GenericTypeT
 {
     internal class GenericExample
     {
-        string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        private List<Music>? musicList = new();
+        Data? d = new();
+        string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        //private List<Music>? musicList = new();
+        //private List<Movie>? movieList = new();
+
+        //private List<Base> baseList = new();
+        //private List<Base>? base2List;
+
         public GenericExample()
         {
+            d.musicList.Add(new Music { Name = "Fields of Gold", Artist = "Sting", Id = 1 });
+            d.movieList.Add(new Movie { Id = 13, Name = "Moon", MovieGenre = 1 });
+
+            #region
+            //baseList.AddRange(d.musicList);
+            //baseList.AddRange(movieList);
+
+            //foreach (var item in baseList)
+            //{
+            //    if (item.GetType() == typeof(Music))
+            //    {
+            //        Music musicItem = (Music)item;
+            //        Console.WriteLine($"{musicItem.Name}, {musicItem.Artist}");
+            //    }
+            //    else
+            //    {
+            //        Movie movieItem = (Movie)item;
+            //        Console.WriteLine($"{movieItem.Name}, {movieItem.MovieGenre}");
+            //    }
+
+            //}
+            #endregion
             // Save the data
-            Save(path + @"/MediaMaster/Music.json", musicList);
+            Save(path + @"/Media.json", d);
 
             // Load the data depending on type
-            musicList = Load<List<Music>>(path + @"/MediaMaster/Music.json");
+            d = Load<Data>(path + @"/Media.json");
         }
 
         /// <summary>
         /// Converts an Object to JSON and writes to file
         /// </summary>
-        internal void Save(string path, object data)
+        internal void Save<T>(string path, T data)
         {
             string json = JsonSerializer.Serialize(data);
             File.WriteAllText(path, json);
@@ -39,4 +67,11 @@ namespace GenericTypeT
             return obj;
         }
     }
+
+    class Data
+    {
+        public List<Music>? musicList { get; set; } = new();
+        public List<Movie>? movieList { get; set; } = new();
+    }
+
 }

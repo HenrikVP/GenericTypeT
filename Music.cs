@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace GenericTypeT
 {
-    internal class Music
+    internal class Music : Base
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-        public int Class1int { get; set; }
+        public string Artist { get; set; }
     }
 }

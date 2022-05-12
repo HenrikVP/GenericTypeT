@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace GenericTypeT
 {
-    internal class Class3
+    [Serializable]
+    internal class Movie : Base
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-        public int Class3int { get; set; }
+        public int MovieGenre { get; set; }
     }
 }
